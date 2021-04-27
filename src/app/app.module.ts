@@ -11,6 +11,7 @@ import {ProductsComponent} from './components/products/products.component';
 import {OrdersComponent} from './components/orders/orders.component';
 import {CartComponent} from './components/cart/cart.component';
 import {RouterModule, Routes} from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
 
 const appRoutes: Routes = [
   {
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatIconModule,
     MatTabsModule,
     RouterModule.forRoot(appRoutes),
   ],

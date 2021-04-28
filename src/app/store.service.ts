@@ -36,4 +36,8 @@ export class StoreService {
   getAllProducts(): Array<Product> {
     return loadProducts();
   }
+
+  getProductById(productId: number): Product | undefined {
+    return this.getAllProducts().find(product => product.id === productId);
+  }
 }

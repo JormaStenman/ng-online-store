@@ -1,19 +1,22 @@
 <table>
   <tbody>
   <tr *ngFor="let product of products" aria-colcount="1">
-    <a [routerLink]="[product.id]">
-      <mat-card>
-        <mat-card-header>
-          <img mat-card-avatar [src]="'assets/product_pics/' + product.id + '.jpeg'"/>
-          <mat-card-title>{{ product.name }}</mat-card-title>
-          <mat-card-subtitle>{{ product.price | currency:'EUR'}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>{{ product.details }}</mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button>Select</button>
-        </mat-card-actions>
-      </mat-card>
-    </a>
+    <td>
+      <a [routerLink]="[product.id]">
+        <mat-card>
+          <mat-card-header>
+            <img mat-card-avatar [src]="'assets/product_pics/' + product.id + '.jpeg'"
+                 alt="{{'product ' + product.id + ' image'}}"/>
+            <mat-card-title>{{ product.name }}</mat-card-title>
+            <mat-card-subtitle>{{ product.price | currency:'EUR'}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>{{ product.details }}</mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button>Select</button>
+          </mat-card-actions>
+        </mat-card>
+      </a>
+    </td>
   </tr>
   </tbody>
 </table>

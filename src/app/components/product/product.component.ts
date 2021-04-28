@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Product, StoreService} from '../../store.service';
 import {CartService} from '../../cart.service';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product',
@@ -10,12 +11,15 @@ import {CartService} from '../../cart.service';
 })
 export class ProductComponent implements OnInit {
   product: Product | undefined;
+  @ViewChild('addToCartDialog', {read: TemplateRef, static: false})
+  addToCartDialogTemplate!: TemplateRef<any>;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private storeService: StoreService,
     private cartService: CartService,
+    private dialogService: MatDialog,
   ) {
   }
 
@@ -34,8 +38,15 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  addToCart(productId: number): void {
-    this.cartService.addToCart(productId);
+  addToCart(product: Product): void {
+    this.cartService.addToCart(product.id);
+    const dialogRef = this.dialogService.open(this.addToCartDialogTemplate, {
+      data: {
+        product,
+      },
+    });
+    const timeout = setTimeout(() => dialogRef.close(), 5000);
+    dialogRef.afterClosed().subscribe(_ => clearTimeout(timeout));
   }
 
 }

@@ -13,9 +13,13 @@
       <mat-icon>arrow_back</mat-icon>
       See more products
     </button>
-    <button mat-raised-button color="primary" (click)="addToCart(product.id)">
+    <button mat-raised-button color="primary" (click)="addToCart(product)">
       <mat-icon>add_shopping_cart</mat-icon>
       Add to cart
     </button>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #addToCartDialog let-data>
+  <h3>One of {{ data.product.name }} added in cart.</h3>
+</ng-template>

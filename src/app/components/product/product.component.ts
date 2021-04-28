@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {Product, StoreService} from '../../store.service';
+import {CartService} from '../../cart.service';
 
 @Component({
   selector: 'app-product',
@@ -14,6 +15,7 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private storeService: StoreService,
+    private cartService: CartService,
   ) {
   }
 
@@ -30,6 +32,10 @@ export class ProductComponent implements OnInit {
         this.router.navigate(['/products']).catch();
       }
     });
+  }
+
+  addToCart(productId: number): void {
+    this.cartService.addToCart(productId);
   }
 
 }

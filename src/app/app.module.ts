@@ -18,6 +18,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {ProductComponent} from './components/product/product.component';
+import {CartService} from './cart.service';
 
 const appRoutes: Routes = [
   {
@@ -69,6 +70,7 @@ const appRoutes: Routes = [
     MatButtonModule,
   ],
   providers: [
+    CartService,
     StoreService,
   ],
   bootstrap: [AppComponent]

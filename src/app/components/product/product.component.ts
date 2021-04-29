@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    this.cartService.addToCart(product.id);
+    this.cartService.addOne(product.id);
     const dialogRef = this.dialogService.open(this.addToCartDialogTemplate, {
       data: {
         product,

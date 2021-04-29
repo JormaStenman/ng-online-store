@@ -1,1 +1,65 @@
-<p>cart works!</p>
+<table mat-table [dataSource]="products" *ngIf="products.length; else cartIsEmpty">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <a [routerLink]="['/products', row.product.id]">{{row.product.id}}</a>
+    </mat-cell>
+    <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{row.product.name}}</mat-cell>
+    <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  </ng-container>
+  <ng-container matColumnDef="unitPrice">
+    <mat-header-cell *matHeaderCellDef>Unit Price</mat-header-cell>
+    <!--suppress TypeScriptUnresolvedVariable -->
+    <mat-cell *matCellDef="let row">{{row.product.price | currency:'EUR'}}</mat-cell>
+    <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  </ng-container>
+  <ng-container matColumnDef="quantity">
+    <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+    <!--suppress TypeScriptUnresolvedVariable -->
+    <mat-cell *matCellDef="let row">{{row.quantity}}</mat-cell>
+    <mat-footer-cell *matFooterCellDef>{{totalPrice | currency:'EUR'}}</mat-footer-cell>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button
+        mat-icon-button
+        color="warn"
+        [attr.aria-label]="'remove all items ' + row.product.id + ' from cart'"
+        [matTooltip]="'remove all items ' + row.product.id + ' from cart'"
+        matTooltipShowDelay="1000"
+        (click)="removeAll(row.product.id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        [attr.aria-label]="'add one of item ' + row.product.id + ' to cart'"
+        [matTooltip]="'add one of item ' + row.product.id + ' to cart'"
+        matTooltipShowDelay="1000"
+        (click)="addOne(row.product.id)"
+      >
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        [attr.aria-label]="'remove one of item ' + row.product.id + ' from cart'"
+        [matTooltip]="'remove one of item ' + row.product.id + ' from cart'"
+        matTooltipShowDelay="1000"
+        (click)="removeOne(row.product.id)">
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>
+    </mat-cell>
+    <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+</table>
+<ng-template #cartIsEmpty>
+  <h3>Your cart is empty.</h3>
+</ng-template>

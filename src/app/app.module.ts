@@ -20,6 +20,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {ProductComponent} from './components/product/product.component';
 import {CartService} from './cart.service';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const appRoutes: Routes = [
   {
@@ -70,6 +73,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MatButtonModule,
     MatDialogModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatBadgeModule,
   ],
   providers: [
     CartService,

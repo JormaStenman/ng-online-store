@@ -21,10 +21,9 @@
 </mat-card>
 
 <ng-template #addToCartDialog let-data>
-  <h3>One of "<i>{{ data.product.name }}</i>" added in cart.</h3>
-  <mat-dialog-content>TODO: add link to cart</mat-dialog-content>
+  <h3>One of "<i>{{ data.product.name }}</i>" added in <a routerLink="/cart" mat-dialog-close>cart</a>.</h3>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>
+    <button mat-button mat-dialog-close [attr.aria-label]="'close dialog'">
       <mat-icon>close</mat-icon>
     </button>
   </mat-dialog-actions>

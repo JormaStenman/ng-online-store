@@ -21,5 +21,11 @@
 </mat-card>
 
 <ng-template #addToCartDialog let-data>
-  <h3>One of {{ data.product.name }} added in cart.</h3>
+  <h3>One of "<i>{{ data.product.name }}</i>" added in cart.</h3>
+  <mat-dialog-content>TODO: add link to cart</mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
 </ng-template>

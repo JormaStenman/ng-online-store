@@ -1,13 +1,19 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from '../../cart.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, DoCheck {
-  itemsInCart = 0;
+export class NavbarComponent implements OnInit, OnDestroy {
+  get itemsInCart(): number {
+    return CartService.countItems(this.cart);
+  }
+
+  private cart: any;
+  private cartSub: Subscription | undefined;
 
   constructor(
     private cartService: CartService,
@@ -15,14 +21,13 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    this.refreshCart();
+    [this.cart, this.cartSub] = this.cartService.addSubscription(cart => this.cart = cart);
   }
 
-  ngDoCheck(): void {
-    this.refreshCart();
+  ngOnDestroy(): void {
+    if (this.cartSub) {
+      this.cartSub.unsubscribe();
+    }
   }
 
-  refreshCart(): void {
-    this.itemsInCart = this.cartService.numItems();
-  }
 }

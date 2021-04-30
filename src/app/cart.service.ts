@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {EventEmitter} from '@angular/core';
+import {Subscription} from 'rxjs';
 
 const storage = window.sessionStorage;
 
@@ -17,11 +19,16 @@ function saveCart(cart: any): void {
 })
 export class CartService {
 
-  numItems(): number {
-    const cart = loadCart();
+  private cartSubject: EventEmitter<any> = new EventEmitter();
+
+  static countItems(cart: any): number {
     return Object.values(cart)
       .map(val => val as number)
       .reduce((acc, val) => acc + val, 0);
+  }
+
+  addSubscription(next: (value: any) => void): (any | Subscription)[] {
+    return [this.getCart(), this.cartSubject.subscribe(next)];
   }
 
   addOne(productId: number): void {
@@ -29,6 +36,7 @@ export class CartService {
     cart[productId] ||= 0;
     cart[productId]++;
     saveCart(cart);
+    this.emitCart(cart);
   }
 
   removeOne(productId: number): void {
@@ -43,15 +51,22 @@ export class CartService {
       cart[productId] = quantity - 1;
     }
     saveCart(cart);
+    this.emitCart(cart);
   }
 
   removeAll(productId: number): void {
     const cart = loadCart();
     delete cart[productId];
     saveCart(cart);
+    this.emitCart(cart);
   }
 
-  getCart(): any {
-    return loadCart();
+  private getCart(): any {
+    return {...loadCart()};
   }
+
+  private emitCart(cart: any): void {
+    this.cartSubject.emit({...cart});
+  }
+
 }

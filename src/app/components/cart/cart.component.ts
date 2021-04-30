@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from '../../cart.service';
 import {Product, StoreService} from '../../store.service';
+import {Subscription} from 'rxjs';
 
 interface ProductRow {
   product: Product;
@@ -12,13 +13,12 @@ interface ProductRow {
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'name', 'unitPrice', 'quantity', 'actions'];
   products: Array<ProductRow> = [];
   totalPrice = 0;
-
-  @Output()
-  cartUpdated: EventEmitter<null> = new EventEmitter<null>();
+  private cart: any;
+  private cartSub: Subscription | null = null;
 
   constructor(
     private cartService: CartService,
@@ -27,18 +27,23 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    [this.cart, this.cartSub] = this.cartService.addSubscription(cart => this.cart = cart);
     this.update();
   }
 
+  ngOnDestroy(): void {
+    if (this.cartSub) {
+      this.cartSub.unsubscribe();
+    }
+  }
+
   private update(): void {
-    const cart = this.cartService.getCart();
-    this.products = Object.keys(cart)
+    this.products = Object.keys(this.cart)
       .map(key => parseInt(key, 10))
       .map(productId => this.storeService.getProductById(productId))
-      .map(product => (product ? {product, quantity: cart[product.id]} : null) as ProductRow)
+      .map(product => (product ? {product, quantity: this.cart[product.id]} : null) as ProductRow)
       .filter(productRow => productRow);
     this.totalPrice = this.products.reduce((total, row) => total + row.quantity * row.product.price, 0);
-    this.cartUpdated.emit();
   }
 
   addOne(productId: number): void {

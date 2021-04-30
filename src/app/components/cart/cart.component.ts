@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CartService} from '../../cart.service';
 import {Product, StoreService} from '../../store.service';
 
@@ -16,6 +16,9 @@ export class CartComponent implements OnInit {
   displayedColumns = ['id', 'name', 'unitPrice', 'quantity', 'actions'];
   products: Array<ProductRow> = [];
   totalPrice = 0;
+
+  @Output()
+  cartUpdated: EventEmitter<null> = new EventEmitter<null>();
 
   constructor(
     private cartService: CartService,
@@ -35,6 +38,7 @@ export class CartComponent implements OnInit {
       .map(product => (product ? {product, quantity: cart[product.id]} : null) as ProductRow)
       .filter(productRow => productRow);
     this.totalPrice = this.products.reduce((total, row) => total + row.quantity * row.product.price, 0);
+    this.cartUpdated.emit();
   }
 
   addOne(productId: number): void {

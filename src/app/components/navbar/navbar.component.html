@@ -22,11 +22,11 @@
     mat-tab-link
     routerLink="/cart"
   >
-    <mat-icon>shopping_cart</mat-icon>&nbsp;
+    <mat-icon>shopping_cart</mat-icon>
     <span
-      matBadge="{{itemsInCart}}"
-      matBadgeOverlap="false"
       [matBadgeHidden]="itemsInCart === 0"
+      [matBadge]="itemsInCart"
+      matBadgeOverlap="false"
     >
       Shopping cart
     </span>

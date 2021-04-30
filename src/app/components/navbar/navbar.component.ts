@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {CartService} from '../../cart.service';
 
 @Component({
@@ -6,7 +6,7 @@ import {CartService} from '../../cart.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, DoCheck {
   itemsInCart = 0;
 
   constructor(
@@ -15,6 +15,14 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.refreshCart();
+  }
+
+  ngDoCheck(): void {
+    this.refreshCart();
+  }
+
+  refreshCart(): void {
     this.itemsInCart = this.cartService.numItems();
   }
 }

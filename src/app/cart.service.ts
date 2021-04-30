@@ -54,6 +54,11 @@ export class CartService {
     this.emitCart(cart);
   }
 
+  emptyCart(): void {
+    saveCart({});
+    this.emitCart({});
+  }
+
   removeAll(productId: number): void {
     const cart = loadCart();
     delete cart[productId];

@@ -60,4 +60,9 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.removeAll(productId);
     this.update();
   }
+
+  emptyCart(): void {
+    this.cartService.emptyCart();
+    this.update();
+  }
 }

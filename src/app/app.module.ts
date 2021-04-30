@@ -23,6 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatBadgeModule} from '@angular/material/badge';
+import {OrderService} from './order.service';
 
 const appRoutes: Routes = [
   {
@@ -80,6 +81,7 @@ const appRoutes: Routes = [
   providers: [
     CartService,
     StoreService,
+    OrderService,
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from '../../cart.service';
 import {Product, StoreService} from '../../store.service';
 import {Subscription} from 'rxjs';
+import {OrderService} from '../../order.service';
 
 interface ProductRow {
   product: Product;
@@ -23,6 +24,7 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     private cartService: CartService,
     private storeService: StoreService,
+    private orderService: OrderService,
   ) {
   }
 
@@ -64,5 +66,13 @@ export class CartComponent implements OnInit, OnDestroy {
   emptyCart(): void {
     this.cartService.emptyCart();
     this.update();
+  }
+
+  placeOrder(): void {
+    Object.keys(this.cart); // TODO
+    this.orderService.addOrder({
+      date: new Date(),
+      items: [],
+    });
   }
 }

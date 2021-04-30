@@ -11,7 +11,7 @@ export interface Product {
 
 const storage = window.localStorage;
 // noinspection SpellCheckingInspection
-const productsKey = 'me.stenman.products';
+const key = 'me.stenman.products';
 
 function initProducts(): Array<Product> {
   const copyOfInitial = [...initialProducts];
@@ -20,12 +20,12 @@ function initProducts(): Array<Product> {
 }
 
 function loadProducts(): Array<Product> {
-  const item = storage.getItem(productsKey);
+  const item = storage.getItem(key);
   return item ? JSON.parse(item) : initProducts();
 }
 
 function storeProducts(products: Array<Product>): void {
-  storage.setItem(productsKey, JSON.stringify(products));
+  storage.setItem(key, JSON.stringify(products));
 }
 
 @Injectable({

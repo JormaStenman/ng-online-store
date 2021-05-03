@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderService} from '../../order.service';
 import {Order} from '../../Order.model';
 import {StoreService} from '../../store.service';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-order',
@@ -12,12 +13,15 @@ import {StoreService} from '../../store.service';
 export class OrderComponent implements OnInit {
   order: Order | undefined;
   displayedColumns = ['product', 'quantity', 'unitPrice'];
+  @ViewChild('reallyCancelModal', {read: TemplateRef, static: false})
+  reallyCancelModal!: TemplateRef<any>;
 
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
     private storeService: StoreService,
     private router: Router,
+    private dialogService: MatDialog,
   ) {
   }
 
@@ -42,4 +46,22 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  orderTotal(): number {
+    if (this.order) {
+      return this.order.items.reduce((total, lineItem) =>
+        total + lineItem.quantity * lineItem.unitPrice, 0);
+    }
+    return 0;
+  }
+
+  cancelOrder(): void {
+    this.dialogService
+      .open(this.reallyCancelModal)
+      .afterClosed().subscribe(reallyCancel => {
+      if (reallyCancel && this.order) {
+        this.orderService.cancelOrder(this.order.id);
+        this.router.navigate(['/orders']).catch();
+      }
+    });
+  }
 }

@@ -14,7 +14,8 @@ const storage = window.localStorage;
 const key = 'me.stenman.products';
 
 function initProducts(): Array<Product> {
-  const copyOfInitial = [...initialProducts];
+  // @ts-ignore
+  const copyOfInitial = [...initialProducts.default];
   storeProducts(copyOfInitial);
   return copyOfInitial;
 }
@@ -38,7 +39,8 @@ export class StoreService {
   }
 
   getAllProducts(): Array<Product> {
-    return [...loadProducts()];
+    const products = loadProducts();
+    return products;
   }
 
   getProductById(productId: number): Product | undefined {
@@ -56,5 +58,14 @@ export class StoreService {
     }
     console.error(`no product found matching id ${productId}`);
     return false;
+  }
+
+  returnProduct(productId: number, quantity: number): void {
+    const allProducts = loadProducts();
+    const productRef = StoreService.productRef(productId, allProducts);
+    if (productRef) {
+      productRef.inventory += quantity;
+      storeProducts(allProducts);
+    }
   }
 }

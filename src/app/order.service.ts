@@ -52,4 +52,16 @@ export class OrderService {
     const order = loadOrders().find(o => o.id === orderId);
     return order ? {...order} : undefined;
   }
+
+  cancelOrder(orderId: string): void {
+    const orders = loadOrders();
+    const index = orders.findIndex(order => order.id === orderId);
+    if (index >= 0) {
+      orders[index].items.forEach(lineItem => {
+        this.storeService.returnProduct(lineItem.productId, lineItem.quantity);
+      });
+      orders.splice(index, 1);
+      storeOrders(orders);
+    }
+  }
 }

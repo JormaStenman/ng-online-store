@@ -16,12 +16,16 @@
   <mat-table [dataSource]="order.items" *ngIf="order.items.length">
     <ng-container matColumnDef="product">
       <mat-header-cell *matHeaderCellDef>Product</mat-header-cell>
+      <!--suppress TypeScriptUnresolvedVariable -->
       <mat-cell *matCellDef="let lineItem" [routerLink]="['/products', lineItem.productId]">
+        <!--suppress TypeScriptUnresolvedVariable -->
         <a [routerLink]="['/products', lineItem.productId]">
+          <!--suppress TypeScriptUnresolvedVariable -->
           <img with="75" height="75" [src]="'assets/product_pics/' + lineItem.productId + '.jpeg'"
                alt="{{'product ' + lineItem.productId + ' image'}}"/>
         </a>
-          &nbsp;
+        &nbsp;
+        <!--suppress TypeScriptUnresolvedVariable -->
         <a [routerLink]="['/products', lineItem.productId]">
           {{lineItem.productName}}
         </a>
@@ -44,4 +48,33 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let lineItem; columns: displayedColumns"></mat-row>
   </mat-table>
+  <mat-grid-list cols="3" rowHeight="3em">
+    <mat-grid-tile colspan="2">
+      <mat-grid-tile-header>Order total</mat-grid-tile-header>
+      <b>{{orderTotal() | currency:'EUR'}}</b>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1">
+      <mat-grid-tile-header></mat-grid-tile-header>
+      <button mat-flat-button routerLink="/orders">
+        <mat-icon>arrow_back</mat-icon>
+        All orders
+      </button>
+      <button mat-flat-button color="warn" (click)="cancelOrder()">
+        <mat-icon>delete</mat-icon>
+        Cancel order
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
 </ng-container>
+
+<ng-template #reallyCancelModal let-data>
+  <h3>Are you sure you want to cancel this order?</h3>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false" color="primary">
+      No
+    </button>
+    <button mat-button [mat-dialog-close]="true" color="warn">
+      Yes
+    </button>
+  </mat-dialog-actions>
+</ng-template>

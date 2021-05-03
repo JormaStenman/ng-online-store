@@ -33,11 +33,28 @@ function storeProducts(products: Array<Product>): void {
 })
 export class StoreService {
 
+  private static productRef(productId: number, products?: Array<Product> | undefined): Product | undefined {
+    return (products || loadProducts()).find(p => p.id === productId);
+  }
+
   getAllProducts(): Array<Product> {
-    return loadProducts();
+    return [...loadProducts()];
   }
 
   getProductById(productId: number): Product | undefined {
-    return this.getAllProducts().find(product => product.id === productId);
+    const productRef = StoreService.productRef(productId);
+    return productRef ? {...productRef} : undefined;
+  }
+
+  sellProduct(productId: number, quantity: number): boolean {
+    const allProducts = loadProducts();
+    const productRef = StoreService.productRef(productId, allProducts);
+    if (productRef) {
+      productRef.inventory -= quantity;
+      storeProducts(allProducts);
+      return productRef.inventory >= 0;
+    }
+    console.error(`no product found matching id ${productId}`);
+    return false;
   }
 }

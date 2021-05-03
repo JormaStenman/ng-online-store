@@ -1,1 +1,34 @@
-<p>orders works!</p>
+<ng-template #noOrders>
+  <h3>You have no orders.</h3>
+</ng-template>
+
+<ng-container *ngIf="orders.length; else noOrders">
+  <mat-table [dataSource]="orders">
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        {{order.date | date:'yyyy-MM-dd'}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        {{order.status | orderStatus}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <a [routerLink]="['/orders', order.id]">{{order.id}}</a>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="contents">
+      <mat-header-cell *matHeaderCellDef>Contents</mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        {{orderContents(order)}}
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let order; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</ng-container>

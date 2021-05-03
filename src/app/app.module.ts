@@ -24,6 +24,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatBadgeModule} from '@angular/material/badge';
 import {OrderService} from './order.service';
+import { OrderStatusPipe } from './pipes/order-status.pipe';
+import { OrderComponent } from './components/order/order.component';
 
 const appRoutes: Routes = [
   {
@@ -43,6 +45,10 @@ const appRoutes: Routes = [
     component: OrdersComponent,
   },
   {
+    path: 'orders/:order_id',
+    component: OrderComponent,
+  },
+  {
     path: 'cart',
     component: CartComponent,
   },
@@ -60,7 +66,9 @@ const appRoutes: Routes = [
     ProductsComponent,
     OrdersComponent,
     CartComponent,
-    ProductComponent
+    ProductComponent,
+    OrderStatusPipe,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

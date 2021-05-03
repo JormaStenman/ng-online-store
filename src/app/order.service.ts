@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Order} from './Order.model';
+import {Order, OrderStatus} from './Order.model';
 import {v4 as uuid} from 'uuid';
+import {StoreService} from './store.service';
 
 const storage = window.localStorage;
 // noinspection SpellCheckingInspection
@@ -20,14 +21,35 @@ function storeOrders(orders: Array<Order>): void {
 })
 export class OrderService {
 
+  constructor(
+    private storeService: StoreService,
+  ) {
+  }
+
   getOrders(): Array<Order> {
     return loadOrders();
   }
 
   addOrder(order: Order): Order {
     const orders = loadOrders();
-    orders.push(order = {...order, date: new Date(), id: uuid()});
+    const newOrder = {
+      ...order,
+      date: new Date(),
+      id: uuid(),
+      status: OrderStatus.ordered
+    };
+    newOrder.items.forEach(lineItem => {
+      if (!this.storeService.sellProduct(lineItem.productId, lineItem.quantity)) {
+        order.status = OrderStatus.waitingForProducts;
+      }
+    });
+    orders.push(newOrder);
     storeOrders(orders);
-    return order;
+    return newOrder;
+  }
+
+  getOrderById(orderId: string): Order | undefined {
+    const order = loadOrders().find(o => o.id === orderId);
+    return order ? {...order} : undefined;
   }
 }

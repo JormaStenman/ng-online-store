@@ -36,16 +36,27 @@ export class CartComponent implements OnInit, OnDestroy {
   @ViewChild('thankYouModal', {read: TemplateRef, static: false})
   thankYouModal!: TemplateRef<any>;
 
-  private static cartToOrder(cart: any): Order {
+  private cartToOrder(cart: any): Order {
     return {
       items: Object.keys(cart)
         .map(productId => parseInt(productId, 10))
         .filter(productId => !isNaN(productId))
-        .map(productId => ({
-          productId,
-          quantity: parseInt(cart[productId], 10),
-        } as LineItem))
+        .map(productId => this.storeService.getProductById(productId))
+        .map(product => product)
+        .map(product => {
+          if (!product) {
+            return null;
+          }
+          return ({
+            productId: product.id,
+            quantity: parseInt(cart[product.id], 10),
+            unitPrice: product.price,
+          } as LineItem);
+        })
+        .filter(lineItem => lineItem)
+        // @ts-ignore
         .filter(lineItem => !isNaN(lineItem.quantity))
+        // @ts-ignore
         .filter(lineItem => lineItem.quantity > 0)
     } as Order;
   }
@@ -91,7 +102,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   placeOrder(): void {
-    const order = this.orderService.addOrder(CartComponent.cartToOrder(this.cart));
+    const order = this.orderService.addOrder(this.cartToOrder(this.cart));
     this.dialogService
       .open(this.thankYouModal, {data: {order}})
       .afterClosed().subscribe(_ => {

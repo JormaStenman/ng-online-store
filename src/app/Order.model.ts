@@ -4,8 +4,14 @@ export interface LineItem {
   unitPrice: number;
 }
 
+export const enum OrderStatus {
+  ordered = 1,
+  waitingForProducts,
+}
+
 export interface Order {
   id: string;
   date: Date;
+  status: OrderStatus;
   items: Array<LineItem>;
 }

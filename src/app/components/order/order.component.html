@@ -1,0 +1,47 @@
+<ng-container *ngIf="order">
+  <mat-grid-list cols="1" rowHeight="3em">
+    <mat-grid-tile>
+      <mat-grid-tile-header>Order id</mat-grid-tile-header>
+      {{order.id}}
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-grid-tile-header>Order date</mat-grid-tile-header>
+      {{order.date | date:'yyyy-MM-dd'}}
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-grid-tile-header>Order status</mat-grid-tile-header>
+      {{order.status | orderStatus}}
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-table [dataSource]="order.items" *ngIf="order.items.length">
+    <ng-container matColumnDef="product">
+      <mat-header-cell *matHeaderCellDef>Product</mat-header-cell>
+      <mat-cell *matCellDef="let lineItem" [routerLink]="['/products', lineItem.productId]">
+        <a [routerLink]="['/products', lineItem.productId]">
+          <img with="75" height="75" [src]="'assets/product_pics/' + lineItem.productId + '.jpeg'"
+               alt="{{'product ' + lineItem.productId + ' image'}}"/>
+        </a>
+          &nbsp;
+        <a [routerLink]="['/products', lineItem.productId]">
+          {{lineItem.productName}}
+        </a>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+      <!--suppress TypeScriptUnresolvedVariable -->
+      <mat-cell *matCellDef="let lineItem">
+        {{lineItem.quantity}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="unitPrice">
+      <mat-header-cell *matHeaderCellDef>Unit Price</mat-header-cell>
+      <!--suppress TypeScriptUnresolvedVariable -->
+      <mat-cell *matCellDef="let lineItem">
+        {{lineItem.unitPrice | currency:'EUR'}}
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let lineItem; columns: displayedColumns"></mat-row>
+  </mat-table>
+</ng-container>

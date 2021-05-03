@@ -1,19 +1,10 @@
 import {Injectable} from '@angular/core';
+import {Order} from './Order.model';
+import {v4 as uuid} from 'uuid';
 
 const storage = window.localStorage;
 // noinspection SpellCheckingInspection
 const key = 'me.stenman.orders';
-
-export interface LineItem {
-  productId: number;
-  quantity: number;
-  unitPrice: number;
-}
-
-export interface Order {
-  date: Date;
-  items: Array<LineItem>;
-}
 
 function loadOrders(): Array<Order> {
   const item = storage.getItem(key);
@@ -33,9 +24,10 @@ export class OrderService {
     return loadOrders();
   }
 
-  addOrder(order: Order): void {
+  addOrder(order: Order): Order {
     const orders = loadOrders();
-    orders.push(order);
+    orders.push(order = {...order, date: new Date(), id: uuid()});
     storeOrders(orders);
+    return order;
   }
 }

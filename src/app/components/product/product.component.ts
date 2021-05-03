@@ -11,8 +11,8 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class ProductComponent implements OnInit {
   product: Product | undefined;
-  @ViewChild('addToCartDialog', {read: TemplateRef, static: false})
-  addToCartDialogTemplate!: TemplateRef<any>;
+  @ViewChild('addToCartModal', {read: TemplateRef, static: false})
+  addToCartModal!: TemplateRef<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
 
   addToCart(product: Product): void {
     this.cartService.addOne(product.id);
-    const dialogRef = this.dialogService.open(this.addToCartDialogTemplate, {
+    const dialogRef = this.dialogService.open(this.addToCartModal, {
       data: {
         product,
       },

@@ -85,6 +85,20 @@
     Place order
   </button>
 </ng-container>
+
 <ng-template #cartIsEmpty>
   <h3>Your cart is empty.</h3>
+</ng-template>
+
+<ng-template #thankYouModal let-data>
+  <h3>Thank You for your order!</h3>
+  <mat-dialog-content>
+    View <a [routerLink]="['/orders', data.order.id]">this order</a>.
+    You can view all your orders on the <a routerLink="/orders">orders page</a>.
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close [attr.aria-label]="'close dialog'">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
 </ng-template>

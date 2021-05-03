@@ -20,7 +20,7 @@
   </mat-card-actions>
 </mat-card>
 
-<ng-template #addToCartDialog let-data>
+<ng-template #addToCartModal let-data>
   <h3>One of "<i>{{ data.product.name }}</i>" added in <a routerLink="/cart" mat-dialog-close>cart</a>.</h3>
   <mat-dialog-actions>
     <button mat-button mat-dialog-close [attr.aria-label]="'close dialog'">

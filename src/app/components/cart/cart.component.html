@@ -1,11 +1,11 @@
 <ng-container *ngIf="products.length; else cartIsEmpty">
-  <table mat-table [dataSource]="products">
+  <mat-table [dataSource]="products">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
       <mat-cell *matCellDef="let row">
         <a [routerLink]="['/products', row.product.id]">{{row.product.id}}</a>
       </mat-cell>
-      <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -16,13 +16,13 @@
       <mat-header-cell *matHeaderCellDef>Unit Price</mat-header-cell>
       <!--suppress TypeScriptUnresolvedVariable -->
       <mat-cell *matCellDef="let row">{{row.product.price | currency:'EUR'}}</mat-cell>
-      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      <mat-footer-cell *matFooterCellDef><b>{{totalPrice | currency:'EUR'}}</b></mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="quantity">
       <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
       <!--suppress TypeScriptUnresolvedVariable -->
       <mat-cell *matCellDef="let row">{{row.quantity}}</mat-cell>
-      <mat-footer-cell *matFooterCellDef>{{totalPrice | currency:'EUR'}}</mat-footer-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -60,7 +60,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
-  </table>
+  </mat-table>
   <button
     mat-button
     routerLink="/products"

@@ -1,1 +1,16 @@
-<p>main works!</p>
+<mat-grid-list cols="3">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="clearStorage()"
+      [disabled]="disabled()"
+      matTooltip="Clear this application's local & session storage areas."
+    >
+      <mat-icon>delete</mat-icon>
+      Clear local storage area
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
+</mat-grid-list>

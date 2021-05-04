@@ -14,6 +14,14 @@ function saveCart(cart: any): void {
   storage.setItem(key, JSON.stringify(cart));
 }
 
+function clearCart(): void {
+  storage.removeItem(key);
+}
+
+function hasStorage(): boolean {
+  return storage.getItem(key) !== null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -74,4 +82,11 @@ export class CartService {
     this.cartSubject.emit({...cart});
   }
 
+  clearCart(): void {
+    clearCart();
+  }
+
+  hasStorage(): boolean {
+    return hasStorage();
+  }
 }

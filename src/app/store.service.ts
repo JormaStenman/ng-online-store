@@ -29,6 +29,14 @@ function storeProducts(products: Array<Product>): void {
   storage.setItem(key, JSON.stringify(products));
 }
 
+function clearProducts(): void {
+  storage.removeItem(key);
+}
+
+function hasStorage(): boolean {
+  return storage.getItem(key) !== null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -66,5 +74,13 @@ export class StoreService {
       productRef.inventory += quantity;
       storeProducts(allProducts);
     }
+  }
+
+  clearProducts(): void {
+    clearProducts();
+  }
+
+  hasStorage(): boolean {
+    return hasStorage();
   }
 }

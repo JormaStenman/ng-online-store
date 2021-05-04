@@ -16,6 +16,15 @@ function storeOrders(orders: Array<Order>): void {
   storage.setItem(key, JSON.stringify(orders));
 }
 
+function clearOrders(): void {
+  storage.removeItem(key);
+}
+
+function hasStorage(): boolean {
+  return storage.getItem(key) !== null;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -63,5 +72,13 @@ export class OrderService {
       orders.splice(index, 1);
       storeOrders(orders);
     }
+  }
+
+  clearOrders(): void {
+    clearOrders();
+  }
+
+  hasStorage(): boolean {
+    return hasStorage();
   }
 }

@@ -1,26 +1,30 @@
 <nav mat-tab-nav-bar>
   <a
     mat-tab-link
-    routerLink="/main"
+    (click)="navigateTo('/main')"
+    [active]="activeLink.startsWith('/main')"
   >
     Main
   </a>
   <a
     mat-tab-link
-    routerLink="/products"
+    (click)="navigateTo('/products')"
+    [active]="activeLink.startsWith('/products')"
   >
     Products
   </a>
   <span class="ngos-toolbar-spacer"></span>
   <a
     mat-tab-link
-    routerLink="/orders"
+    (click)="navigateTo('/orders')"
+    [active]="activeLink.startsWith('/orders')"
   >
     My Orders
   </a>
   <a
     mat-tab-link
-    routerLink="/cart"
+    (click)="navigateTo('/cart')"
+    [active]="activeLink.startsWith('/cart')"
   >
     <mat-icon>shopping_cart</mat-icon>
     <span

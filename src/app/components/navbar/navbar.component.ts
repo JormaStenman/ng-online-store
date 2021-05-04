@@ -1,6 +1,7 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from '../../cart.service';
 import {Subscription} from 'rxjs';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,21 +14,35 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   private cart: any;
+  activeLink = '';
+  private routeSub: Subscription | undefined;
   private cartSub: Subscription | undefined;
 
   constructor(
     private cartService: CartService,
+    private router: Router,
   ) {
+  }
+
+  navigateTo(url: string): void {
+    this.router.navigate([url]).catch();
   }
 
   ngOnInit(): void {
     [this.cart, this.cartSub] = this.cartService.addSubscription(cart => this.cart = cart);
+    this.routeSub = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.activeLink = (event as NavigationEnd).url;
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.cartSub) {
-      this.cartSub.unsubscribe();
-    }
+    [this.cartSub, this.routeSub].forEach(sub => {
+      if (sub) {
+        sub.unsubscribe();
+      }
+    });
   }
 
 }

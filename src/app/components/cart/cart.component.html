@@ -87,7 +87,13 @@
 </ng-container>
 
 <ng-template #cartIsEmpty>
-  <h3>Your cart is empty.</h3>
+  <mat-grid-list cols="3">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <h3>Your cart is empty.</h3>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
 </ng-template>
 
 <ng-template #thankYouModal let-data>

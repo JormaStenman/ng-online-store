@@ -1,5 +1,11 @@
 <ng-template #noOrders>
-  <h3>You have no orders.</h3>
+  <mat-grid-list cols="3">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <h3>You have no orders.</h3>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
 </ng-template>
 
 <ng-container *ngIf="orders.length; else noOrders">

@@ -15,9 +15,9 @@ const key = 'me.stenman.products';
 
 function initProducts(): Array<Product> {
   // @ts-ignore
-  const copyOfInitial = [...initialProducts.default];
-  storeProducts(copyOfInitial);
-  return copyOfInitial;
+  const products = [...initialProducts.default];
+  storeProducts(products);
+  return products;
 }
 
 function loadProducts(): Array<Product> {
@@ -39,8 +39,7 @@ export class StoreService {
   }
 
   getAllProducts(): Array<Product> {
-    const products = loadProducts();
-    return products;
+    return loadProducts();
   }
 
   getProductById(productId: number): Product | undefined {

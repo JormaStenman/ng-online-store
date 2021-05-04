@@ -40,7 +40,7 @@ export class OrderService {
     };
     newOrder.items.forEach(lineItem => {
       if (!this.storeService.sellProduct(lineItem.productId, lineItem.quantity)) {
-        order.status = OrderStatus.waitingForProducts;
+        newOrder.status = OrderStatus.waitingForProducts;
       }
     });
     orders.push(newOrder);

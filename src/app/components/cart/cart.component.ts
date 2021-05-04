@@ -105,9 +105,11 @@ export class CartComponent implements OnInit, OnDestroy {
     const order = this.orderService.addOrder(this.cartToOrder(this.cart));
     this.dialogService
       .open(this.thankYouModal, {data: {order}})
-      .afterClosed().subscribe(_ => {
+      .afterClosed().subscribe(didNavigate => {
       this.emptyCart();
-      this.router.navigate(['/products']).catch();
+      if (!didNavigate) {
+        this.router.navigate(['/products']).catch();
+      }
     });
   }
 }

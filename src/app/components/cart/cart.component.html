@@ -93,8 +93,8 @@
 <ng-template #thankYouModal let-data>
   <h3>Thank You for your order!</h3>
   <mat-dialog-content>
-    View <a [routerLink]="['/orders', data.order.id]">this order</a>.
-    You can view all your orders on the <a routerLink="/orders">orders page</a>.
+    View <a [routerLink]="['/orders', data.order.id]" [mat-dialog-close]="true">this order</a>.
+    You can view all your orders on the <a routerLink="/orders" [mat-dialog-close]="true">orders page</a>.
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button mat-dialog-close [attr.aria-label]="'close dialog'">

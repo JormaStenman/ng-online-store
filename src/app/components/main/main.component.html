@@ -1,16 +1,51 @@
-<mat-grid-list cols="3">
-  <mat-grid-tile></mat-grid-tile>
-  <mat-grid-tile>
-    <button
-      mat-raised-button
-      color="warn"
-      (click)="clearStorage()"
-      [disabled]="disabled()"
-      matTooltip="Clear this application's local & session storage areas."
-    >
-      <mat-icon>delete</mat-icon>
-      Clear local storage area
-    </button>
-  </mat-grid-tile>
-  <mat-grid-tile></mat-grid-tile>
-</mat-grid-list>
+<div>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="clearStorage()"
+    [disabled]="disabled()"
+    matTooltip="Clear this application's local & session storage areas."
+  >
+    <mat-icon>delete</mat-icon>
+    Clear local storage area
+  </button>
+  <h2>Demo Online Store</h2>
+  <mat-divider></mat-divider>
+  <p>
+    This web application demonstrates the following features usually found in any online store
+    website:
+  </p>
+  <ul>
+    <li>
+      A list of products can be browsed.
+    </li>
+    <li>
+      The details of any product can be viewed.
+    </li>
+    <li>
+      Products can be added into a shopping cart.
+    </li>
+    <li>
+      The contents of the shopping cart can be manipulated before ordering.
+    </li>
+    <li>
+      The list of orders can be viewed.
+    </li>
+    <li>
+      The details of any order can be viewed.
+    </li>
+    <li>
+      An order can be cancelled.
+    </li>
+    <li>
+      Product inventories change when orders are placed or cancelled.
+    </li>
+    <li>
+      A navigation bar is always visible at the top of the page.
+    </li>
+  </ul>
+  <p>
+    The application's source code lives <a
+    href='https://github.com/JormaStenman/ng-online-store.git'>here</a>.
+  </p>
+</div>

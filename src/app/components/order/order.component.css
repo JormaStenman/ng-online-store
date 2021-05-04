@@ -1,3 +1,12 @@
 .mat-row:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+.ngos-order-details-header-row th {
+  font-weight: bold;
+  border-bottom: none;
+}
+
+table {
+  width: 100%;
+}

@@ -13,8 +13,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return CartService.countItems(this.cart);
   }
 
-  private cart: any;
   activeLink = '';
+  private cart: any;
   private routeSub: Subscription | undefined;
   private cartSub: Subscription | undefined;
 
@@ -22,10 +22,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private router: Router,
   ) {
-  }
-
-  navigateTo(url: string): void {
-    this.router.navigate([url]).catch();
   }
 
   ngOnInit(): void {
